@@ -9,7 +9,7 @@ export const arr = [
 		id: 2,
 		size: 14,
 		title: 'Buy Grapes',
-		active: false,
+		active: true,
 	},
 	{
 		id: 3,
@@ -17,11 +17,12 @@ export const arr = [
 		title: 'Buy Cherries',
 		active: false,
 	},
-	// {
-	// 	id: 4,
-	// 	size: 14,
-	// 	title: 'Buy Bananas',
-	// },
+	{
+		id: 4,
+		size: 14,
+		title: 'Buy Bananas',
+		active: true,
+	},
 	// {
 	// 	id: 5,
 	// 	size: 14,

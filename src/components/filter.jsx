@@ -1,10 +1,32 @@
-function Filter() {
+function Filter({ filter, onFilterSelect }) {
+	const buttons = [
+		{
+			id: '',
+			label: 'All products',
+		},
+		{
+			id: 'completed',
+			label: 'Completed',
+		},
+		{
+			id: 'big-size',
+			label: 'Big size',
+		},
+	]
+
 	return (
 		<div className='filter'>
 			<div className='btns'>
-				<button>All products</button>
-				<button className='active'>Conpleted</button>
-				<button>Big size</button>
+				{buttons.map(btn => (
+					<button
+						key={btn.id}
+						// className={`${filter === btn.id && 'active'}`}
+						className={`${filter === btn.id && 'active'}`}
+						onClick={() => onFilterSelect(btn.id)}
+					>
+						{btn.label}
+					</button>
+				))}
 			</div>
 		</div>
 	)

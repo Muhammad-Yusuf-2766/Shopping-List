@@ -5,6 +5,7 @@ import { v4 as uuid4 } from 'uuid'
 import { arr } from '../constants'
 import Filter from './filter'
 import Information from './information'
+import SearchPanel from './search-panel'
 import ShoppingAddForm from './shopping-add-form'
 import ShoppingList from './shopping-list'
 
@@ -13,6 +14,8 @@ class App extends React.Component {
 		super(props)
 		this.state = {
 			data: arr,
+			search: '',
+			filter: '',
 		}
 	}
 
@@ -39,7 +42,6 @@ class App extends React.Component {
 
 	onAdd = item => {
 		const { title, number } = item
-		this.setState(state => ({ maxId: state.maxId++ }))
 		const newData = { title, size: number, active: false, id: uuid4() }
 		const newArr = [...this.state.data, newData]
 		this.setState({
@@ -47,20 +49,52 @@ class App extends React.Component {
 		})
 	}
 
+	SearchData = (arr, term) => {
+		if (term.length === 0) {
+			return arr
+		} else {
+			return arr.filter(item => item.title.toLowerCase().indexOf(term) > -1)
+		}
+	}
+
+	onChangeSearch = search => {
+		this.setState({ search })
+	}
+
+	filterData = (arr, filter) => {
+		switch (filter) {
+			case 'completed':
+				return arr.filter(item => item.active)
+			case 'big-size':
+				return arr.filter(item => item.size > 10)
+			default:
+				return arr
+		}
+	}
+
+	onFilterSelect = filter => {
+		this.setState({ filter })
+	}
+
 	render() {
-		const { data } = this.state
+		const { data, search, filter } = this.state
+		const allData = this.filterData(this.SearchData(data, search), filter)
+
 		return (
 			<div className='app'>
 				<div className='wrapper'>
 					<div className='card'>
 						<Information length={data.length} />
+
+						<SearchPanel onChangeSearch={this.onChangeSearch} />
+
 						<ShoppingAddForm onAdd={this.onAdd} />
 						<ShoppingList
-							data={data}
+							data={allData}
 							onDelete={this.onDelete}
 							onToggleActive={this.onToggleActive}
 						/>
-						<Filter />
+						<Filter filter={filter} onFilterSelect={this.onFilterSelect} />
 					</div>
 					<img src='/earth.svg ' alt='' />
 				</div>

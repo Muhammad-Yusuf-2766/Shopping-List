@@ -29,7 +29,7 @@ class ShoppingAddForm extends React.Component {
 
 	render() {
 		return (
-			<form className='form'>
+			<div className='form'>
 				<input
 					type='text'
 					className='title'
@@ -47,7 +47,7 @@ class ShoppingAddForm extends React.Component {
 					required
 				/>
 				<button onClick={this.onAdd}>Add</button>
-			</form>
+			</div>
 		)
 	}
 }
